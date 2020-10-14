@@ -1,0 +1,5 @@
+Flannel:
+kubectl apply -f https://raw.githubusercontent.com/007biswa/podnetwork/main/kube-flannel.yaml
+
+Calico:
+kubectl apply -f https://raw.githubusercontent.com/007biswa/podnetwork/main/calico.yaml

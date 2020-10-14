@@ -1,0 +1,59 @@
+For Certificate Authority:
+-------------------------------------------------------------------------------------------------
+openssl genrsa -out ca.key 2048
+
+openssl req -new -key ca.key -subj "/CN=KUBERNETES-CA" -out ca.csr
+
+openssl x509 -req -in ca.csr -signKey ca.key -out ca.crt
+
+--------------------------------------------------------------------------------------------------
+
+Admin User:
+--------------------------------------------------------------------------------------------------
+openssl genrsa -out admin.key 2048
+
+openssl req -new -key admin.key -subj "/CN=kube-admin /O=system:masters" -out admin.csr
+
+openssl x509 -req -in admin.csr -CA ca.crt -CAkey ca.key -out admin.crt
+--------------------------------------------------------------------------------------------------
+
+Admin calls REST API to kube-apiserver
+
+curl https://kube-apiserver:6443/api/v1/pods --key admin.key --cert admin.crt --cacert ca.crt
+
+--------------------------------------------------------------------------------------------------
+
+Kube-apiserver
+
+openssl genrsa -out apiserver.key 2048
+
+openssl.cnf
+------------
+
+------------
+
+
+openssl req -new -key apiserver.key -subj "/CN=kube-apiserver" -out apiserver.csr -config openssl.cnf
+
+openssl x509 -req -in apiserver.csr -CA ca.crt -CAkey ca.key -out apiserver.crt
+
+
+1) Cert file used for kube-apiserver
+/etc/kubernetes/manifests/kube-apiserver.yaml
+- --tls-cert-file path
+
+2) Cert file used to authenticate kube-apiserver as a client to ETCD server
+- --etcd-certfile path
+
+3) Key used to authenticate kube-apiserver to the kubelet server
+- --kubelet-client-key path
+
+4) ETCD server certificate use to host ETCD server
+/etc/kubernetes/manifests/etcd.yaml
+- --cert-file path
+
+
+
+
+
+
