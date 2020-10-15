@@ -67,7 +67,23 @@ then, openssl x509 -in <path i.e. /etc/kubernetes/pki/etcd/server.crt> -noout -t
 inside /etc/kubernetes/manifests/kube-apiserver.yaml, get the path of - --client-ca-file
 openssl x509 -in <path> -noout -text
 
-  
+------------------------------------------------------------------------------------
+
+Controller Manager carries out all certificate related ops.
+/etc/kubernetes/manifests/kube-controller-manager.yaml
+- --cluster-signing-cert-file
+- --cluster-signing-key-file
+
+a)User first creates a key
+	openssl genrsa -out jane.key 2048
+b)Generate a CSR using the key
+	openssl req -new -key jane.key -subj "/CN=jane" -out jane.csr
+c)Inside the CSR yaml file, inside 'request', copy the below value:
+	cat jane.csr | base 64 | tr -d "\n"
+
+
+
+
 
 
 
