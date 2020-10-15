@@ -52,6 +52,25 @@ openssl x509 -req -in apiserver.csr -CA ca.crt -CAkey ca.key -out apiserver.crt
 /etc/kubernetes/manifests/etcd.yaml
 - --cert-file path
 
+5) ETCD server CA root certificate used to server ETCD server
+- --trusted-ca-file path
+
+6) CN, name of CA and alternative names, validity configured on kube-apiserver certificate
+   Get the - --tls-cert-file path
+then, openssl x509 -in <path i.e. /etc/kubernetes/pki/apiserver.crt> -noout -text
+
+7) CN configured on ETCD server certificate
+inside /etc/kubernetes/manifests/etcd.yaml, take the path of - --cert-file path
+then, openssl x509 -in <path i.e. /etc/kubernetes/pki/etcd/server.crt> -noout -text
+
+8) Validity of root CA certificate
+inside /etc/kubernetes/manifests/kube-apiserver.yaml, get the path of - --client-ca-file
+openssl x509 -in <path> -noout -text
+
+  
+
+
+
 
 
 
