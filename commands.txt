@@ -24,3 +24,6 @@ Which account is kube-proxy role assigned to it:
 kubectl describe rolebinding kube-proxy -n kube-system | grep "Group"
 
 
+kubectl api-resources --namespaced=true/false (Returns namespaced or non namespaced resources)
+
+
