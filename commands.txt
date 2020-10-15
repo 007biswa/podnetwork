@@ -3,3 +3,12 @@ kubectl apply -f https://raw.githubusercontent.com/007biswa/podnetwork/main/kube
 
 Calico:
 kubectl apply -f https://raw.githubusercontent.com/007biswa/podnetwork/main/calico.yaml
+
+curl https://kube-master:6443/version -> get api version
+curl https://kube-master:6443/api/v1/pods -> get pod list
+curl http://localhost:6443 -k -> get available api groups
+curl http://localhost:6443/apis -k | grep "name" -> get resource groups
+
+kubectl proxy -> launches a proxy service locally on port 8001 and uses cred. and certs. from ~/.kube/config file to access the cluster
+
+curl http://localhost:8001 -k -> Access the proxy service.
