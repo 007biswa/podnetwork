@@ -12,3 +12,15 @@ curl http://localhost:6443/apis -k | grep "name" -> get resource groups
 kubectl proxy -> launches a proxy service locally on port 8001 and uses cred. and certs. from ~/.kube/config file to access the cluster
 
 curl http://localhost:8001 -k -> Access the proxy service.
+
+
+Authorization mode configured on cluster:
+--------------------------------------------
+kubectl describe pod kube-apiserver-master -n kube-system | grep -i authorization-mode
+
+
+Which account is kube-proxy role assigned to it:
+---------------------------------------------------
+kubectl describe rolebinding kube-proxy -n kube-system | grep "Group"
+
+
